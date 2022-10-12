@@ -58,7 +58,7 @@ public class AppMedidorEnergia {
         do{
             System.out.print("Informe o NR série do medidor: ");
             nrSerie = scan.next();
-            if(nrSerie == ""){
+            if(nrSerie.isEmpty()){
                 System.out.println("O número de série deve conter dados");
                 continue;
             }
@@ -67,7 +67,7 @@ public class AppMedidorEnergia {
 
         char tipoUcInstalado;
         do{
-            System.out.print("Informe o Tipo de consumo de undiade do medidor: ");
+            System.out.print("Informe o Tipo de consumo de unidade do medidor: ");
             tipoUcInstalado = scan.next().toUpperCase().charAt(0);
             if(tipoUcInstalado != 'C' && tipoUcInstalado != 'I' && tipoUcInstalado != 'R'){
                 System.out.println("Informe o carectere adequado para o tipo de unidade de medidor");
@@ -82,7 +82,7 @@ public class AppMedidorEnergia {
             System.out.print("Informe a leitura atual do medidor: ");
             leituraAtual = scan.nextInt();
             if (leituraAtual <= 0) {
-                System.out.println("O número da leitura altual deve ser um número positivo");
+                System.out.println("O número da leitura atual deve ser um número positivo");
                 continue;
             }
             break;
@@ -114,12 +114,18 @@ public class AppMedidorEnergia {
         do{
             System.out.println("Informe a leitura atual do medidor: ");
             leituraAtual = scan.nextInt();
-            medidorEnergia.registrarLeitura(leituraAtual);
-            if(leituraAtual <= 0){
-                System.out.println("O número da leitura altual deve ser um número positivo");
-                continue;
+            if(leituraAtual <= 0 || leituraAtual < medidorEnergia.getLeituraAnterior()){
+                if(leituraAtual <= 0 ){
+                    System.out.println("O número da leitura atual deve ser um número positivo");
+                    continue;
+                }else{
+                    System.out.println("O número da leitura atual deve ser maior do que a leitura anterior");
+                    continue;
+                }
             }
+            medidorEnergia.registrarLeitura(leituraAtual);
             break;
+
         }while(true);
 
         System.out.println(medidorEnergia.getLeituraAtual());
